@@ -12,7 +12,9 @@
 # endregion
 
 
-from random import choice
+from random import choice, randrange, random
+from pprint import pprint
+from copy import copy
 
 
 def random_chromosome():
@@ -24,7 +26,7 @@ def random_chromosome():
 
 def random_population():
     population = []
-    for i in range(5):
+    for i in range(50):
         population.append(random_chromosome())
     return population
 
@@ -33,25 +35,37 @@ def simulate(population):
     next_gen = []
 
     for chromosome in population:
-        # Do nothing
+        if random() < 0.01:
+            chromosome = mutute(chromosome)
 
         next_gen.append(chromosome)
     
     return next_gen
 
 
+def mutute(chromosome):
+    pos = randrange(0, len(chromosome))
+    mutated = copy(chromosome)
+    mutated[pos] = int(not chromosome[pos])
+    return mutated
+
+
 if __name__ == "__main__":
-    population = random_population()
     print("Starting simulation.")
 
     generations = []
-    for i in range(100):
+    generations.append(random_population())
+    for i in range(1000):
         population = generations[-1]
         next_gen = simulate(population)
         generations.append(next_gen)
 
     totals = []
     for gen in generations:
-        total = sum(gen)
+        totals.append(sum(sum(chromosome) for chromosome in gen))
     
+    from matplotlib import pyplot
+    pyplot.plot(range(0, len(generations)), totals)
+    pyplot.show()
+
     print("Finished simulation.")
