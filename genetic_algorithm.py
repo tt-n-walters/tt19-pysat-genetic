@@ -12,8 +12,9 @@
 # endregion
 
 
-from random import choice, randint
+from random import choice, randint, random
 import matplotlib.pyplot as plt
+import copy
 
 
 def random_chromosome():
@@ -35,23 +36,27 @@ def fitness(chromosome):
 
 
 def mutate(chromosome):
+    print("Mutating chromosome")
+    mutated = copy.copy(chromosome)
     pos = randint(0, len(chromosome) - 1)
     if chromosome[pos] == 1:
-        chromosome[pos] = 0
+        mutated[pos] = 0
     else:
-        chromosome[pos] = 1
-    return chromosome
+        mutated[pos] = 1
+    return mutated
 
 
 def simulate(population):
     next_gen = []
-
+    
     for chromosome in population:
-        # Do nothing
+        if random() < 0.01:
+            chromosome = mutate(chromosome)
 
         next_gen.append(chromosome)
     
     return next_gen
+
 
 
 if __name__ == "__main__":
