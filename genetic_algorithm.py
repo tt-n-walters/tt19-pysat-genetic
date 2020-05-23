@@ -13,6 +13,7 @@
 
 
 from random import choice
+import matplotlib.pyplot as plt
 
 
 def random_chromosome():
@@ -56,4 +57,15 @@ if __name__ == "__main__":
         generations.append(next_gen)
     
     print("Finished simulation.")
-    print(generations)
+    
+    gen_fitnesses = []
+    for population in generations:
+        pop_fitness = []
+        for chromosome in population:
+            pop_fitness.append(fitness(chromosome))
+        gen_fitnesses.append(sum(pop_fitness))
+    
+    plt.plot(range(101), gen_fitnesses)
+    plt.xlabel("Generation")
+    plt.ylabel("Fitness")
+    plt.show()
