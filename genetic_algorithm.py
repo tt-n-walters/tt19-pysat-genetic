@@ -12,7 +12,7 @@
 # endregion
 
 
-from random import choice
+from random import choice, randint
 import matplotlib.pyplot as plt
 
 
@@ -32,6 +32,15 @@ def random_population():
 
 def fitness(chromosome):
     return sum(chromosome) / len(chromosome)
+
+
+def mutate(chromosome):
+    pos = randint(0, len(chromosome) - 1)
+    if chromosome[pos] == 1:
+        chromosome[pos] = 0
+    else:
+        chromosome[pos] = 1
+    return chromosome
 
 
 def simulate(population):
