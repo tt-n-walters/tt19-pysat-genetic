@@ -29,6 +29,10 @@ def random_population():
     return population
 
 
+def fitness(chromosome):
+    return sum(chromosome) / len(chromosome)
+
+
 def simulate(population):
     next_gen = []
 
@@ -45,13 +49,11 @@ if __name__ == "__main__":
     print("Starting simulation.")
 
     generations = []
+    generations.append(population)
     for i in range(100):
         population = generations[-1]
         next_gen = simulate(population)
         generations.append(next_gen)
-
-    totals = []
-    for gen in generations:
-        total = sum(gen)
     
     print("Finished simulation.")
+    print(generations)
