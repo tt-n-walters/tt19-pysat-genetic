@@ -45,6 +45,11 @@ def mutate(chromosome):
     return mutated
 
 
+def select(population, n):
+    ordered = sorted(population, key=fitness, reverse=True)
+    return ordered[0:n]
+
+
 def simulate(population, mutation_chance=0.001):
     next_gen = []
     
@@ -61,7 +66,7 @@ def simulate(population, mutation_chance=0.001):
 if __name__ == "__main__":
     chromosome_size = 10
     population_size = 50
-    simulations = 10000
+    simulations = 1000000
 
     population = random_population(population_size, chromosome_size)
     print("Starting simulation.")
@@ -70,7 +75,7 @@ if __name__ == "__main__":
     generations.append(population)
     for i in range(simulations):
         population = generations[-1]
-        next_gen = simulate(population, mutation_chance=0.1)
+        next_gen = simulate(population, mutation_chance=0.01)
         generations.append(next_gen)
     
     print("Finished simulation.")
