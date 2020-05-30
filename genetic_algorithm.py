@@ -57,9 +57,8 @@ def simulate(population, mutation_chance=0.001):
     best_chromosomes = select(population, num_to_survive)
     new_chromosomes = random_population(num_to_generate, 10)
     
-    next_gen = best_chromosomes + new_chromosomes
-    return next_gen
-
+    population = best_chromosomes + new_chromosomes
+    next_gen = []
     
     for chromosome in population:
         if random() < mutation_chance:
