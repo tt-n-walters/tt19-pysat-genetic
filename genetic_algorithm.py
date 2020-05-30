@@ -61,7 +61,7 @@ def simulate(population, mutation_chance=0.001):
 if __name__ == "__main__":
     chromosome_size = 10
     population_size = 50
-    simulations = 100
+    simulations = 10000
 
     population = random_population(population_size, chromosome_size)
     print("Starting simulation.")
@@ -70,7 +70,7 @@ if __name__ == "__main__":
     generations.append(population)
     for i in range(simulations):
         population = generations[-1]
-        next_gen = simulate(population)
+        next_gen = simulate(population, mutation_chance=0.1)
         generations.append(next_gen)
     
     print("Finished simulation.")
@@ -82,7 +82,8 @@ if __name__ == "__main__":
             pop_fitness.append(fitness(chromosome))
         gen_fitnesses.append(sum(pop_fitness))
     
-    plt.plot(range(101), gen_fitnesses)
-    plt.xlabel("Generation")
-    plt.ylabel("Fitness")
+    plt.plot(range(simulations + 1), gen_fitnesses)
+    plt.xlabel("Generation noº")
+    plt.ylabel("Fitness %")
+    plt.ylim(ymin=0, ymax=100)
     plt.show()
