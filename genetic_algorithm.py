@@ -55,14 +55,16 @@ def simulate(population, mutation_chance=0.001):
     num_to_generate = len(population) - num_to_survive
 
     best_chromosomes = select(population, num_to_survive)
-    new_chromosomes = random_population(num_to_generate, 10)
+    new_chromosomes = random_population(num_to_generate, len(population[0]))
     
     population = best_chromosomes + new_chromosomes
     next_gen = []
     
     for chromosome in population:
-        if random() < mutation_chance:
-            chromosome = mutate(chromosome)
+        # Let the chromosome attempt to mutate once for each bit
+        for _ in chromosome:
+            if random() < mutation_chance:
+                chromosome = mutate(chromosome)
 
         next_gen.append(chromosome)
     
@@ -73,7 +75,7 @@ def simulate(population, mutation_chance=0.001):
 if __name__ == "__main__":
     chromosome_size = 10
     population_size = 50
-    simulations = 10000
+    simulations = 1000
 
     population = random_population(population_size, chromosome_size)
     print("Starting simulation.")
