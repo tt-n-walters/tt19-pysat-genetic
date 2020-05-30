@@ -51,7 +51,10 @@ def select(population, n):
 
 
 def simulate(population, mutation_chance=0.001):
-    next_gen = []
+    half = len(population) // 2
+    next_gen = select(population, half)
+    return next_gen
+
     
     for chromosome in population:
         if random() < mutation_chance:
@@ -64,9 +67,9 @@ def simulate(population, mutation_chance=0.001):
 
 
 if __name__ == "__main__":
-    chromosome_size = 10
-    population_size = 50
-    simulations = 1000000
+    chromosome_size = 4
+    population_size = 20
+    simulations = 10
 
     population = random_population(population_size, chromosome_size)
     print("Starting simulation.")
