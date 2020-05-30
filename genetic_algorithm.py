@@ -48,9 +48,9 @@ def mutate(chromosome):
 def crossover(mother, father):
     pos = randint(0, len(mother) - 1)
     if choice([True, False]):
-        return mother[0:pos] + father[pos:-1]
+        return mother[0:pos] + father[pos:]
     else:
-        return father[0:pos] + mother[pos:-1]
+        return father[0:pos] + mother[pos:]
 
 
 
@@ -64,7 +64,13 @@ def simulate(population, mutation_chance=0.001):
     num_to_generate = len(population) - num_to_survive
 
     best_chromosomes = select(population, num_to_survive)
-    new_chromosomes = random_population(num_to_generate, len(population[0]))
+    # new_chromosomes = random_population(num_to_generate, len(population[0]))
+    new_chromosomes = []
+    for _ in range(num_to_generate):
+        mother = choice(best_chromosomes)
+        father = choice(best_chromosomes)
+        child = crossover(mother, father)
+        new_chromosomes.append(child)
     
     population = best_chromosomes + new_chromosomes
     next_gen = []
