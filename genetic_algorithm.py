@@ -20,7 +20,7 @@ import copy
 def random_chromosome(length):
     chromosome = []
     for i in range(length):
-        chromosome.append(choice([0, 1]))
+        chromosome.append(choice([0, 0, 0, 0, 1]))
     return chromosome
 
 
@@ -51,8 +51,13 @@ def select(population, n):
 
 
 def simulate(population, mutation_chance=0.001):
-    half = len(population) // 2
-    next_gen = select(population, half)
+    num_to_survive = len(population) // 2
+    num_to_generate = len(population) - num_to_survive
+
+    best_chromosomes = select(population, num_to_survive)
+    new_chromosomes = random_population(num_to_generate, 10)
+    
+    next_gen = best_chromosomes + new_chromosomes
     return next_gen
 
     
@@ -67,9 +72,9 @@ def simulate(population, mutation_chance=0.001):
 
 
 if __name__ == "__main__":
-    chromosome_size = 4
-    population_size = 20
-    simulations = 10
+    chromosome_size = 10
+    population_size = 50
+    simulations = 10000
 
     population = random_population(population_size, chromosome_size)
     print("Starting simulation.")
@@ -88,10 +93,10 @@ if __name__ == "__main__":
         pop_fitness = []
         for chromosome in population:
             pop_fitness.append(fitness(chromosome))
-        gen_fitnesses.append(sum(pop_fitness))
+        gen_fitnesses.append(sum(pop_fitness) / len(pop_fitness))
     
     plt.plot(range(simulations + 1), gen_fitnesses)
     plt.xlabel("Generation noº")
     plt.ylabel("Fitness %")
-    plt.ylim(ymin=0, ymax=100)
+    plt.ylim(ymin=0, ymax=1)
     plt.show()
