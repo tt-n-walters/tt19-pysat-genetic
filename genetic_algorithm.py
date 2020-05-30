@@ -17,17 +17,17 @@ import matplotlib.pyplot as plt
 import copy
 
 
-def random_chromosome():
+def random_chromosome(length):
     chromosome = []
-    for i in range(10):
+    for i in range(length):
         chromosome.append(choice([0, 1]))
     return chromosome
 
 
-def random_population():
+def random_population(size, length):
     population = []
-    for i in range(5):
-        population.append(random_chromosome())
+    for i in range(size):
+        population.append(random_chromosome(length))
     return population
 
 
@@ -36,7 +36,6 @@ def fitness(chromosome):
 
 
 def mutate(chromosome):
-    print("Mutating chromosome")
     mutated = copy.copy(chromosome)
     pos = randint(0, len(chromosome) - 1)
     if chromosome[pos] == 1:
@@ -46,11 +45,11 @@ def mutate(chromosome):
     return mutated
 
 
-def simulate(population):
+def simulate(population, mutation_chance=0.001):
     next_gen = []
     
     for chromosome in population:
-        if random() < 0.01:
+        if random() < mutation_chance:
             chromosome = mutate(chromosome)
 
         next_gen.append(chromosome)
@@ -60,12 +59,16 @@ def simulate(population):
 
 
 if __name__ == "__main__":
-    population = random_population()
+    chromosome_size = 10
+    population_size = 50
+    simulations = 100
+
+    population = random_population(population_size, chromosome_size)
     print("Starting simulation.")
 
     generations = []
     generations.append(population)
-    for i in range(100):
+    for i in range(simulations):
         population = generations[-1]
         next_gen = simulate(population)
         generations.append(next_gen)
