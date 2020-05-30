@@ -45,6 +45,15 @@ def mutate(chromosome):
     return mutated
 
 
+def crossover(mother, father):
+    pos = randint(0, len(mother) - 1)
+    if choice([True, False]):
+        return mother[0:pos] + father[pos:-1]
+    else:
+        return father[0:pos] + mother[pos:-1]
+
+
+
 def select(population, n):
     ordered = sorted(population, key=fitness, reverse=True)
     return ordered[0:n]
